@@ -1,17 +1,18 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Author extends Model {
+  class Books extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Author.hasMany(models.Books, { foreignKey: 'author_id' });
+      Books.belongsTo(models.Author, { foreignKey: 'author_id' });
+      Books.hasMany(models.ImgsBooks, { foreignKey: 'book_id' });
     }
   }
-  Author.init(
+  Books.init(
     {
       id: {
         allowNull: false,
@@ -19,24 +20,32 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      name: {
+      title: {
         type: DataTypes.STRING(20),
         allowNull: false,
       },
-      surname: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-      },
-      birthdate: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-      biography: {
+      synopsis: {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      photo: {
-        type: DataTypes.STRING(255),
+      number_pages: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      editorial: {
+        type: DataTypes.STRING(40),
+        allowNull: false,
+      },
+      publication_date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      score: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+      },
+      author_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       status: {
@@ -47,8 +56,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Author',
+      modelName: 'Books',
     }
   );
-  return Author;
+  return Books;
 };
