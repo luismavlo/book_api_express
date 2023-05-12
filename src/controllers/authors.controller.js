@@ -62,4 +62,14 @@ exports.update = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.delete = catchAsync(async (req, res, next) => {});
+exports.delete = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  const authorDelted = await authorsServices.delete(id);
+
+  return res.status(200).json({
+    status: 'success',
+    message: 'The author has been deleted! 👌',
+    authorDelted,
+  });
+});

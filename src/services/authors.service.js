@@ -32,6 +32,14 @@ class AuthorsServices {
   async update(author, authorData) {
     return await author.update(authorData);
   }
+
+  async delete(authorId) {
+    //buscar el author que voy a eliminar
+    const author = await this.findOne(authorId);
+
+    //actualizar el status del author a eliminar a false
+    return await author.update({ status: false });
+  }
 }
 
 module.exports = AuthorsServices;
