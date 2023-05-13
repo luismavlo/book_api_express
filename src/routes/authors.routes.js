@@ -1,10 +1,17 @@
 const express = require('express');
 
 const authorController = require('../controllers/authors.controller');
+const validationsMiddleware = require('./../middlewares/validations.middleware');
 
 const router = express.Router();
 
-router.route('/').get(authorController.findAll).post(authorController.create);
+router
+  .route('/')
+  .get(authorController.findAll)
+  .post(
+    validationsMiddleware.createAuthorsValidations,
+    authorController.create
+  );
 
 router
   .route('/:id')

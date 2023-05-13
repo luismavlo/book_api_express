@@ -10,6 +10,7 @@ const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/error.controller');
 
 const authorRouter = require('./routes/authors.routes');
+const bookRouter = require('./routes/books.routes');
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use('/api/v1', limiter);
 
 //rutas
 app.use('/api/v1/authors', authorRouter);
+app.use('/api/v1/books', bookRouter);
 
 app.all('*', (req, res, next) => {
   return next(
