@@ -6,9 +6,15 @@ const booksController = require('../controllers/books.controller');
 //middlewares
 const booksMiddleware = require('./../middlewares/books.middleware');
 
+//utils
+const { upload } = require('./../utils/multer');
+
 const router = express.Router();
 
-router.route('/').get(booksController.findAll).post(booksController.create);
+router
+  .route('/')
+  .get(booksController.findAll)
+  .post(upload.array('booksImgs', 3), booksController.create);
 
 router
   .use('/:id', booksMiddleware.existBook)
